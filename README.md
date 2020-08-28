@@ -11,7 +11,7 @@ Sarrafchi: A free website to get live currency rates in Free Market.
 
 [![Sarrafchi - live currency rates in Free Market - vuejs](demo.jpg)](https://sarrafchi.ir/en/)
 
-[![Sarrafchi - live currency rates in Free Market - vuejs](demo-news.jpg)](https://sarrafchi.ir/en/)
+[![Sarrafchi - live currency rates in Free Market - vuejs](demo-news.jpg)](https://sarrafchi.ir/news/)
 ---------
 
 # Max Base
