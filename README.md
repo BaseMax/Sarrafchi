@@ -1,7 +1,7 @@
 # Sarrafchi
 
-Sarrafchi: A free website to get live currency rates in Free Market.
-
+Sarrafchi: A free website to get live currency rates in Free Market. (VueJS, SPA)
+ 
 ### Sarrafchi Features
 
 - Responsive
