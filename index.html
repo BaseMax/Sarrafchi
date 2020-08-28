@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html class="no-js">
+  <head>
+    <title>اخبار اقتصادی ایران و جهان | قیمت ارز | سکه و طلا | صرافچی</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="معتبرترین اخبار اقتصادی ایران و جهان همراه با جدیدترین قیمت ارزهای جهانی و قیمت سکه و طلا">
+    <meta name="author" content="Max Base">
+    <meta name="keyword" content="">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="icon" href="/asset/favicon.ico">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="/style.css?v=0.16">
+    <meta property="og:title" content="اخبار اقتصادی ایران و جهان | قیمت ارز | سکه و طلا | صرافچی">
+    <meta property="og:description" content="معتبرترین اخبار اقتصادی ایران و جهان همراه با جدیدترین قیمت ارزهای جهانی و قیمت سکه و طلا">
+    <meta property="og:site_name" content="صرافچی">
+    <script type="text/javascript" src="/asset/vue.js"></script>
+    <script type="text/javascript" src="/asset/vue-router.js"></script>
+    <script type="text/javascript" src="/asset/axios.js"></script>
+    <script type="text/javascript" src="/asset/vue-lazyload.js"></script>
+  </head>
+  <body class="">
+    <div id="app">
+      <div class="clear"></div>
+      <div class="container">
+        <router-view :key="$route.fullPath"></router-view>
+        <footerbar></footerbar>
+      </div>
+    </div>
+
+    <template id="home-page">
+      <div>
+        <header>
+          <br><br>
+          <center>
+            <h1 class="page-title">{{translate("صرافچی")}}</h1>
+            <!-- <br> -->
+            <router-link :to="'/news/'">
+              <h2 class="page-subtitle">{{translate("اخبار اقتصادی قیمت ارز, سکه و طلا")}}</h2>
+            </router-link>
+          </center>
+          <br>
+        </header>
+        <p>
+          {{translate("نرخ ارز ها و طلا در بازار آزاد ایران. کلیه قیمت ها به تومان است (1 تومان = 10 ریال)")}}
+        </p>
+        <br>
+
+        <h1 class="page-subtitle">{{translate("قیمت لحظه ای ارز ایران و جهان")}}</h1>
+
+        <table class="table">
+          <thead>
+            <tr>
+              <!-- <th width="10">کد/Code</th> -->
+              <th>{{translate("نام")}}</th>
+              <th width="auto">{{translate("خرید")}}</th>
+              <th width="auto">{{translate("فروش")}}</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="(currency, currencyName) in currencies">
+              <!-- <td align="center">USD</td> -->
+              <td align="center">{{translate(currencyName)}}</td>
+              <td align="center">{{formatPrice(currency.buy)}}</td>
+              <td align="center">{{formatPrice(currency.sell)}}</td>
+            </tr>
+          </tbody>
+        </table>
+
+      </div>
+    </template>
+
+    <template id="error-page">
+      <div>
+        <center>
+          <br><br><br><br><br>
+          <h2>یافت نشد!</h2>
+          <p>صفحه مورد نظر شما وجود ندارد!</p>
+          <br><br><br>
+        </center>
+      </div>
+    </template>
+
+    <template id="single-page">
+      <div>
+        <header>
+          <br><br>
+          <center>
+            <router-link :to="'/news/'">
+              <h1 class="page-subtitle">اخبار اقتصادی قیمت ارز, سکه و طلا</h1>
+            </router-link>
+          </center>
+        </header>
+        <div v-show="post!==[] && post!==null">
+          <h2>{{post.subtitle}}</h2>
+          <h1>{{post.title}}</h1>
+          <hr>
+          <blockquote>{{post.subtext}}</blockquote>
+          <br>
+          <div v-if="post.image !==null && post.image !==''">
+            <img class="image" :alt="post.title" :src="post.image">
+            <br>
+          </div>
+          <div v-if="post.video !==null && post.video !== ''">
+            <video class="video" width="100%" :poster="post.image" controls="controls" preload="none">
+              <source type="video/mp4" :src="post.video">
+            </video>
+          </div>
+          <p class="post-text">{{post.text}}</p>
+        </div>
+        <div v-show="post===[] || post===null">
+          <br><br>
+          <center>لطفا صبر کنید...</center>
+          <br><br>
+        </div>
+      </div>
+    </template>
+
+    <template id="news-page">
+      <div>
+        <header>
+          <br><br>
+          <center>
+            <router-link :to="'/'">
+              <h1 class="page-subtitle">قیمت لحظه ای ارز, سکه و طلا</h1>
+            </router-link>
+          </center>
+        </header>
+        <div class="post-item" v-for="post in posts">
+          <hr>
+          <router-link :to="'/news/'+post.slug+'/'">
+            <h3>{{post.title}}</h3>
+          </router-link>
+          <p>{{post.excerpt}}</p>
+        </div>
+        <br>
+        <center>
+          <router-link :to="'/news/?page='+(page+1)">
+            <span class="page-subtitle">صفحه بعدی</span>
+          </router-link>
+        </center>
+      </div>
+    </template>
+
+    <template id="footerbar">
+      <footer>
+        <br><br><hr><br>
+        <center>
+          © 2020 sarrafchi.ir All rights reserved.
+        </center>
+        <div class="clear"></div>
+        <br><br>
+      </footer>
+    </template>
+
+    <script type="text/javascript" src="/script.js?v=0.16"></script>
+  </body>
+</html>
