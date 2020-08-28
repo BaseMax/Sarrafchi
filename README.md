@@ -15,6 +15,7 @@ Sarrafchi: A free website to get live currency rates in Free Market. (VueJS, SPA
 
 #### Related Repositories
 
+- https://github.com/BaseMax/live-exchange-rate-theme
 - https://github.com/BaseMax/FirstVueRouter
 - https://github.com/BaseMax/FirstVuejs
 
