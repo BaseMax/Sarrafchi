@@ -61,12 +61,11 @@
             </tr>
           </thead>
           <tbody>
-            <tr v-for="(currency, currencyName) in currencies">
-              <!-- <td align="center">USD</td> -->
-              <td align="center">{{translate(currencyName)}}</td>
-              <td align="center">{{formatPrice(currency.buy)}}</td>
-              <td align="center">{{formatPrice(currency.sell)}}</td>
-            </tr>
+<tr v-for="(currency, currencyName) in currencies">
+  <td align="center">{{ translate(currencyName) }}</td>
+  <td align="center">{{ formatPrice(currency.buy ?? '-') }}</td>
+  <td align="center">{{ formatPrice(currency.sell ?? '-') }}</td>
+</tr>
           </tbody>
         </table>
 
